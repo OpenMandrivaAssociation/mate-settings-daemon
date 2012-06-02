@@ -56,10 +56,10 @@ NOCONFIGURE=yes ./autogen.sh
 %make
 
 %install
-%makeinstall_std xmldir=%{buildroot}%{_datadir}/mate-control-center/keybindings
+%makeinstall_std
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
-%{find_lang} %{name} --with-gnome --all-name
+%find_lang %{name} --with-gnome --all-name
 
 %pre
 if [ -d %{_libexecdir}/%{name} ]
