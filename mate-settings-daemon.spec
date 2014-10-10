@@ -2,7 +2,7 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.8.0
+Version:	1.8.2
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
@@ -47,8 +47,7 @@ Include files for the MATE settings daemon
 NOCONFIGURE=yes ./autogen.sh
 
 %build
-%configure2_5x \
-	--disable-static \
+%configure \
 	--enable-polkit \
 	--enable-profiling \
 	--enable-pulse \
