@@ -3,7 +3,7 @@
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
 Version:	1.8.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://mate-desktop.org
