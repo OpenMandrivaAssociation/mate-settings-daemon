@@ -2,8 +2,8 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.8.2
-Release:	2
+Version:	1.14.0
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://mate-desktop.org
@@ -14,7 +14,7 @@ BuildRequires:	mate-common
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(glib-2.0)
-BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(libcanberra-gtk)
@@ -51,7 +51,8 @@ NOCONFIGURE=yes ./autogen.sh
 	--enable-polkit \
 	--enable-profiling \
 	--enable-pulse \
-	--disable-gstreamer
+	--disable-gstreamer \
+	--with-gtk=3.0
 
 %make
 
@@ -74,10 +75,12 @@ fi
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
 %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
+%{_sysconfdir}/xrdb/*
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
 %{_libexecdir}/msd-locate-pointer
 %{_libdir}/%{name}/liba11y-keyboard.so
+%{_libdir}/%{name}/liba11y-settings.so
 %{_libdir}/%{name}/libkeybindings.so
 %{_libdir}/%{name}/libmpris.so
 %{_libdir}/%{name}/libxrandr.so
@@ -99,7 +102,11 @@ fi
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
 %{_iconsdir}/mate/*/*/*
+%{_iconsdir}/hicolor/*/*/*.*
 %{_mandir}/man1/mate-settings-daemon.1*
+%{_mandir}/man1/msd-datetime-mechanism.1*
+%{_mandir}/man1/msd-locate-pointer.1*
+%{_datadir}/mate-control-center/keybindings/50-accessibility.xml
 
 %files devel
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
