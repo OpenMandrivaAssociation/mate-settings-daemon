@@ -2,12 +2,12 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.14.0
+Version:	1.18.1
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://mate-desktop.org
+Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	intltool
 BuildRequires:	ldetect-lst
 BuildRequires:	mate-common
@@ -16,19 +16,24 @@ BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(ice)
-BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(libcanberra-gtk)
 BuildRequires:	pkgconfig(libmatekbdui)
 BuildRequires:	pkgconfig(libnotify)
-BuildRequires:	pkgconfig(libxklavier)
-BuildRequires:	pkgconfig(nss)
-BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libpulse-mainloop-glib)
+BuildRequires:	pkgconfig(libxklavier)
+BuildRequires:	pkgconfig(mate-desktop-2.0)
+BuildRequires:	pkgconfig(nss)
+BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
+
+#Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
+# needed for xrandr capplet
+#Requires:       mate-control-center-filesystem
+
 
 %description
 MATE settings daemon manages the configuration of the desktop in the
@@ -44,24 +49,20 @@ Include files for the MATE settings daemon
 %prep
 %setup -q 
 %apply_patches
-NOCONFIGURE=yes ./autogen.sh
 
 %build
+#NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--enable-polkit \
 	--enable-profiling \
 	--enable-pulse \
-	--disable-gstreamer \
-	--with-gtk=3.0
-
+	%{nil}
 %make
 
 %install
 %makeinstall_std
 
-# remove unneeded converters
-rm -fr %{buildroot}%{_datadir}/MateConf
-
+# locales
 %find_lang %{name} --with-gnome --all-name
 
 %pre
