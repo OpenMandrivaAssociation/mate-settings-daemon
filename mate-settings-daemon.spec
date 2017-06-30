@@ -30,11 +30,6 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
 
-#Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
-# needed for xrandr capplet
-#Requires:       mate-control-center-filesystem
-
-
 %description
 MATE settings daemon manages the configuration of the desktop in the
 background.
