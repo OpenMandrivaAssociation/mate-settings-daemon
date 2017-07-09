@@ -30,6 +30,7 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
 
+
 %description
 The MATE Desktop Environment is the continuation of GNOME 2. It provides an
 intuitive and attractive desktop environment using traditional metaphors for
@@ -87,12 +88,12 @@ Summary:	Include files for the MATE settings daemon
 Group:		Development/Other
 
 %description devel
-Include files for the MATE settings daemon
+This package contains includes files for the MATE settings daemon.
 
 %files devel
-%{_libdir}/pkgconfig/mate-settings-daemon.pc
 %dir %{_includedir}/mate-settings-daemon
 %{_includedir}/mate-settings-daemon/*
+%{_libdir}/pkgconfig/mate-settings-daemon.pc
 
 #---------------------------------------------------------------------------
 
