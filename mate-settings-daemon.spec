@@ -18,6 +18,7 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libcanberra-gtk)
 BuildRequires:	pkgconfig(libmatekbdui)
+BuildRequires:	pkgconfig(libmatemixer)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libpulse-mainloop-glib)
@@ -29,7 +30,7 @@ BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
-
+BuildRequires:	pkgconfig(xxf86misc)
 
 %description
 The MATE Desktop Environment is the continuation of GNOME 2. It provides an
@@ -104,6 +105,7 @@ This package contains includes files for the MATE settings daemon.
 %build
 #NOCONFIGURE=yes ./autogen.sh
 %configure \
+	--disable-schemas-compile \
 	--enable-polkit \
 	--enable-profiling \
 	--enable-pulse \
