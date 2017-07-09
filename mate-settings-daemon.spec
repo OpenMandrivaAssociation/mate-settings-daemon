@@ -16,7 +16,7 @@ BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(ice)
-BuildRequires:	pkgconfig(libcanberra-gtk)
+BuildRequires:	pkgconfig(libcanberra-gtk3)
 BuildRequires:	pkgconfig(libmatekbdui)
 BuildRequires:	pkgconfig(libmatemixer)
 BuildRequires:	pkgconfig(libnotify)
@@ -31,6 +31,9 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xxf86misc)
+
+Requires:      mate-control-center >= %{url_ver}
+Requires:      matemixer-backend >= %{url_ver}
 
 %description
 The MATE Desktop Environment is the continuation of GNOME 2. It provides an
@@ -87,6 +90,7 @@ configuration of the MATE session in the background.
 %package devel
 Summary:	Include files for the MATE settings daemon
 Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 This package contains includes files for the MATE settings daemon.
