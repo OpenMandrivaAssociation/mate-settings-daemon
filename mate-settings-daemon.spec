@@ -50,9 +50,10 @@ configuration of the MATE session in the background.
 %doc AUTHORS COPYING NEWS
 %dir %{_sysconfdir}/mate-settings-daemon
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
-%{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
-%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
-%{_sysconfdir}/xrdb/*
+%dir %{_sysconfdir}/xrdb/*
+%config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
+%config(noreplace)%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
+%{_sysconfdir}/xrdb/*ad
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
 %{_libexecdir}/msd-locate-pointer
