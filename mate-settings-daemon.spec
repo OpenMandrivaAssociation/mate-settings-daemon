@@ -50,7 +50,7 @@ configuration of the MATE session in the background.
 %doc AUTHORS COPYING NEWS
 %dir %{_sysconfdir}/mate-settings-daemon
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
-%dir %{_sysconfdir}/xrdb/*
+%dir %{_sysconfdir}/xrdb
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %config(noreplace)%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
 %{_sysconfdir}/xrdb/*ad
