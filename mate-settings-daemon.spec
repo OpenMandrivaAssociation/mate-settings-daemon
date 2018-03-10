@@ -2,12 +2,12 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.14.0
+Version:	1.18.2
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://mate-desktop.org
+Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	intltool
 BuildRequires:	ldetect-lst
 BuildRequires:	mate-common
@@ -16,66 +16,44 @@ BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(ice)
-BuildRequires:	pkgconfig(mate-desktop-2.0)
-BuildRequires:	pkgconfig(libcanberra-gtk)
+BuildRequires:	pkgconfig(libcanberra-gtk3)
 BuildRequires:	pkgconfig(libmatekbdui)
+BuildRequires:	pkgconfig(libmatemixer)
 BuildRequires:	pkgconfig(libnotify)
-BuildRequires:	pkgconfig(libxklavier)
-BuildRequires:	pkgconfig(nss)
-BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libpulse-mainloop-glib)
+BuildRequires:	pkgconfig(libxklavier)
+BuildRequires:	pkgconfig(mate-desktop-2.0)
+BuildRequires:	pkgconfig(nss)
+BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xxf86misc)
+
+Requires:      mate-control-center >= %{url_ver}
+Requires:      matemixer-backend >= %{url_ver}
 
 %description
-MATE settings daemon manages the configuration of the desktop in the
-background.
+The MATE Desktop Environment is the continuation of GNOME 2. It provides an
+intuitive and attractive desktop environment using traditional metaphors for
+Linux and other Unix-like operating systems.
 
-%package devel
-Summary:	Include files for the MATE settings daemon
-Group:		Development/Other
+MATE is under active development to add support for new technologies while
+preserving a traditional desktop experience.
 
-%description devel
-Include files for the MATE settings daemon
-
-%prep
-%setup -q 
-%apply_patches
-NOCONFIGURE=yes ./autogen.sh
-
-%build
-%configure \
-	--enable-polkit \
-	--enable-profiling \
-	--enable-pulse \
-	--disable-gstreamer \
-	--with-gtk=3.0
-
-%make
-
-%install
-%makeinstall_std
-
-# remove unneeded converters
-rm -fr %{buildroot}%{_datadir}/MateConf
-
-%find_lang %{name} --with-gnome --all-name
-
-%pre
-if [ -d %{_libexecdir}/%{name} ]
-  then rm -rf %{_libexecdir}/%{name} 
-fi
+This package provides MATE settings daemon, a daemon to manage the
+configuration of the MATE session in the background.
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS
 %dir %{_sysconfdir}/mate-settings-daemon
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
-%{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
-%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
-%{_sysconfdir}/xrdb/*
+%dir %{_sysconfdir}/xrdb
+%config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
+%config(noreplace)%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
+%{_sysconfdir}/xrdb/*ad
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
 %{_libexecdir}/msd-locate-pointer
@@ -108,8 +86,45 @@ fi
 %{_mandir}/man1/msd-locate-pointer.1*
 %{_datadir}/mate-control-center/keybindings/50-accessibility.xml
 
+#---------------------------------------------------------------------------
+
+%package devel
+Summary:	Include files for the MATE settings daemon
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
+
+%description devel
+This package contains includes files for the MATE settings daemon.
+
 %files devel
-%{_libdir}/pkgconfig/mate-settings-daemon.pc
 %dir %{_includedir}/mate-settings-daemon
 %{_includedir}/mate-settings-daemon/*
+%{_libdir}/pkgconfig/mate-settings-daemon.pc
+
+#---------------------------------------------------------------------------
+
+%prep
+%setup -q
+%apply_patches
+
+%build
+#NOCONFIGURE=yes ./autogen.sh
+%configure \
+	--disable-schemas-compile \
+	--enable-polkit \
+	--enable-profiling \
+	--enable-pulse \
+	%{nil}
+%make
+
+%install
+%makeinstall_std
+
+# locales
+%find_lang %{name} --with-gnome --all-name
+
+%pre
+if [ -d %{_libexecdir}/%{name} ]
+  then rm -rf %{_libexecdir}/%{name}
+fi
 
