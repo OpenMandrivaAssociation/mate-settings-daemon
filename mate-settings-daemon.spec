@@ -114,7 +114,7 @@ This package contains includes files for the MATE settings daemon.
 	--enable-profiling \
 	--enable-pulse \
 	%{nil}
-%makebuild
+%make
 
 %install
 %makeinstall_std
