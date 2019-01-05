@@ -32,7 +32,7 @@ BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xxf86misc)
 
-Requires:      mate-control-center >= %{url_ver}
+#Requires:      mate-control-center >= %{url_ver}
 Requires:      matemixer-backend >= %{url_ver}
 
 %description
