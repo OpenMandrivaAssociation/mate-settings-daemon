@@ -2,8 +2,8 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.18.2
-Release:	2
+Version:	1.20.4
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://mate-desktop.org
@@ -105,7 +105,7 @@ This package contains includes files for the MATE settings daemon.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
@@ -115,10 +115,10 @@ This package contains includes files for the MATE settings daemon.
 	--enable-profiling \
 	--enable-pulse \
 	%{nil}
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
