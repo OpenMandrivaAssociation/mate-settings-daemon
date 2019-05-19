@@ -57,29 +57,30 @@ configuration of the MATE session in the background.
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
 %{_libexecdir}/msd-locate-pointer
+%{_udevrulesdir}/61-mate-settings-daemon-rfkill.rules
+%{_libdir}/%{name}/libbackground.so
 %{_libdir}/%{name}/liba11y-keyboard.so
 %{_libdir}/%{name}/liba11y-settings.so
-%{_libdir}/%{name}/libkeybindings.so
-%{_libdir}/%{name}/libmpris.so
-%{_libdir}/%{name}/libxrandr.so
-%{_libdir}/%{name}/libbackground.so
-%{_libdir}/%{name}/libkeyboard.so
-%{_libdir}/%{name}/libsmartcard.so
-%{_libdir}/%{name}/libxrdb.so
 %{_libdir}/%{name}/libclipboard.so
-%{_libdir}/%{name}/libxsettings.so
 %{_libdir}/%{name}/libhousekeeping.so
-%{_libdir}/%{name}/libmouse.so
-%{_libdir}/%{name}/libtyping-break.so
+%{_libdir}/%{name}/libkeybindings.so
+%{_libdir}/%{name}/libkeyboard.so
 %{_libdir}/%{name}/libmedia-keys.so
+%{_libdir}/%{name}/libmouse.so
+%{_libdir}/%{name}/libmpris.so
+%{_libdir}/%{name}/librfkill.so
+%{_libdir}/%{name}/libsmartcard.so
 %{_libdir}/%{name}/libsound.so
+%{_libdir}/%{name}/libxrandr.so
+%{_libdir}/%{name}/libtyping-break.so
+%{_libdir}/%{name}/libxrdb.so
+%{_libdir}/%{name}/libxsettings.so
 %{_libdir}/%{name}/*.mate-settings-plugin
+%{_datadir}/%{name}/*
 %{_datadir}/dbus-1/services/org.mate.SettingsDaemon.service
 %{_datadir}/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
-%{_datadir}/%{name}/*
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
-%{_iconsdir}/mate/*/*/*
 %{_iconsdir}/hicolor/*/*/*.*
 %{_mandir}/man1/mate-settings-daemon.1*
 %{_mandir}/man1/msd-datetime-mechanism.1*
@@ -120,6 +121,10 @@ This package contains includes files for the MATE settings daemon.
 %install
 %make_install
 
+# fix path
+install -dm 0755 %{buildroot}/lib/udev/rules.d/
+mv %{buildroot}/usr/lib/udev/rules.d/61-mate-settings-daemon-rfkill.rules %{buildroot}%{_udevrulesdir}/
+
 # locales
 %find_lang %{name} --with-gnome --all-name
 
@@ -127,4 +132,3 @@ This package contains includes files for the MATE settings daemon.
 if [ -d %{_libexecdir}/%{name} ]
   then rm -rf %{_libexecdir}/%{name}
 fi
-
