@@ -2,7 +2,7 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.22.0
+Version:	1.22.1
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
