@@ -2,12 +2,13 @@
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.22.1
+Version:	1.24.0
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+BuildRequires:	autoconf-archive
 BuildRequires:	intltool
 BuildRequires:	ldetect-lst
 BuildRequires:	mate-common
@@ -51,7 +52,6 @@ configuration of the MATE session in the background.
 %dir %{_sysconfdir}/mate-settings-daemon
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
 %dir %{_sysconfdir}/xrdb
-%config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %config(noreplace)%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
 %{_sysconfdir}/xrdb/*ad
 %{_libexecdir}/mate-settings-daemon
@@ -79,6 +79,7 @@ configuration of the MATE session in the background.
 %{_datadir}/%{name}/*
 %{_datadir}/dbus-1/services/org.mate.SettingsDaemon.service
 %{_datadir}/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
+%{_datadir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
 %{_iconsdir}/hicolor/*/*/*.*
