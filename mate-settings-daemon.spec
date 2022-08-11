@@ -83,9 +83,9 @@ configuration of the MATE session in the background.
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
 %{_iconsdir}/hicolor/*/*/*.*
-%{_mandir}/man1/mate-settings-daemon.1*
-%{_mandir}/man1/msd-datetime-mechanism.1*
-%{_mandir}/man1/msd-locate-pointer.1*
+%doc %{_mandir}/man1/mate-settings-daemon.1*
+%doc %{_mandir}/man1/msd-datetime-mechanism.1*
+%doc %{_mandir}/man1/msd-locate-pointer.1*
 %{_datadir}/mate-control-center/keybindings/50-accessibility.xml
 
 #---------------------------------------------------------------------------
@@ -106,8 +106,7 @@ This package contains includes files for the MATE settings daemon.
 #---------------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
@@ -121,10 +120,6 @@ This package contains includes files for the MATE settings daemon.
 
 %install
 %make_install
-
-# fix path
-install -dm 0755 %{buildroot}/lib/udev/rules.d/
-mv %{buildroot}/usr/lib/udev/rules.d/61-mate-settings-daemon-rfkill.rules %{buildroot}%{_udevrulesdir}/
 
 # locales
 %find_lang %{name} --with-gnome --all-name
