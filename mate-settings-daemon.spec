@@ -3,14 +3,16 @@
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
 Version:	1.26.0
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Patch1:		mate-settings-daemon_0001-datetime-fix-memory-leak.patch
+Patch2:		mate-settings-daemon_0002-mate-settings-manager-fix-memory-leak.patch
 BuildRequires:	autoconf-archive
 BuildRequires:	intltool
-BuildRequires:	ldetect-lst
+BuildRequires:	hwdata
 BuildRequires:	mate-common
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(fontconfig)
@@ -33,8 +35,8 @@ BuildRequires:	pkgconfig(xfixes)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xxf86misc)
 
-#Requires:      mate-control-center >= %{url_ver}
-Requires:      matemixer-backend >= %{url_ver}
+#Requires:	mate-control-center >= %{url_ver}
+Requires:	matemixer-backend >= %{url_ver}
 
 %description
 The MATE Desktop Environment is the continuation of GNOME 2. It provides an
@@ -114,8 +116,8 @@ This package contains includes files for the MATE settings daemon.
 	--disable-schemas-compile \
 	--enable-polkit \
 	--enable-profiling \
-	--enable-pulse \
-	%{nil}
+	--enable-pulse
+
 %make_build
 
 %install
