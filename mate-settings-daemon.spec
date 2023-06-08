@@ -1,15 +1,19 @@
+# Workadound for Clang 16
+%global optflags %{optflags} -Wno-incompatible-function-pointer-types
+
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Summary:	MATE Settings Daemon
 Name:		mate-settings-daemon
-Version:	1.26.0
-Release:	4
+Version:	1.26.1
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
-Patch1:		mate-settings-daemon_0001-datetime-fix-memory-leak.patch
-Patch2:		mate-settings-daemon_0002-mate-settings-manager-fix-memory-leak.patch
+# from upstream
+# https://github.com/mate-desktop/mate-settings-daemon/commit/babfbd3
+Patch1:		mate-settings-daemon_0001-Add-setting-for-adjustment-of-audio-volume-above-100.patch
 BuildRequires:	autoconf-archive
 BuildRequires:	intltool
 BuildRequires:	hwdata
