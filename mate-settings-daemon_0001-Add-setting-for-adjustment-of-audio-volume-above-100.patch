@@ -1,0 +1,87 @@
+From 7a665fa4f6f2d99eeef08185ca887b828be39730 Mon Sep 17 00:00:00 2001
+From: Gordon Norman Squash <gordsqsh@protonmail.com>
+Date: Thu, 28 Jul 2022 21:27:16 -0400
+Subject: [PATCH] Add setting for adjustment of audio volume above 100 per
+ cent:  Part 3
+
+There is often a need for the user to increase the audio playback volume above
+the volume level known as "100% volume".  While increasing the audio volume
+above 100% can result in degraded audio quality, sometimes the audio was, for
+example, originally recorded at an extremely low volume, and the user has no
+other option to clearly hear the audio.  Unfortunately, most MATE applications
+with volume controls do not allow the user to set the volume level above 100%.
+For example, the main MATE Sound Preferences dialog lets you set the audio
+volume beyond 100% (when possible), whereas the Volume Control Applet, Volume
+Control status icon, and special "multimedia" volume control keys do not.  In
+fact, if the user even tries to change the volume using any of the latter
+methods, and the current volume level is above 100%, these latter methods will
+all reduce the volume to 100%, even if the user tried to increase the volume!
+
+This is part 3 of a patch to change this situation.  This patch adds this
+capability to the handlers for the "multimedia" volume control keys -- if the
+appropriate setting is enabled in the MATE Volume Control Dialog (see
+patch 2), then the user can increase the audio volume beyond 100% by pressing
+the "Volume Up" key on their keyboard (if they have such a key).  While this
+patch is smaller than patch 2, it is equally important since the original
+feature request was for the multimedia keys and not for anything else in
+particular.
+---
+ plugins/media-keys/msd-media-keys-manager.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/media-keys/msd-media-keys-manager.c b/plugins/media-keys/msd-media-keys-manager.c
+index 4abb4afd..7422e6ff 100644
+--- a/plugins/media-keys/msd-media-keys-manager.c
++++ b/plugins/media-keys/msd-media-keys-manager.c
+@@ -59,6 +59,9 @@
+ #define TOUCHPAD_SCHEMA "org.mate.peripherals-touchpad"
+ #define TOUCHPAD_ENABLED_KEY "touchpad-enabled"
+ 
++#define SOUND_SCHEMA "org.mate.sound"
++#define VOLUME_OVERAMPLIFIABLE_KEY "volume-overamplifiable"
++
+ typedef struct {
+         char   *application;
+         guint32 time;
+@@ -76,6 +79,7 @@ struct _MsdMediaKeysManagerPrivate
+ #endif
+         GtkWidget        *dialog;
+         GSettings        *settings;
++        GSettings        *sound_settings;
+         GVolumeMonitor   *volume_monitor;
+ 
+         /* Multihead stuff */
+@@ -723,7 +727,10 @@ do_sound_action (MsdMediaKeysManager *manager,
+         /* Theoretically the volume limits might be different for different
+          * streams, also the minimum might not always start at 0 */
+         volume_min = mate_mixer_stream_control_get_min_volume (control);
+-        volume_max = mate_mixer_stream_control_get_normal_volume (control);
++        if (g_settings_get_boolean (manager->priv->sound_settings, VOLUME_OVERAMPLIFIABLE_KEY))
++                volume_max = mate_mixer_stream_control_get_max_volume (control);
++        else
++                volume_max = mate_mixer_stream_control_get_normal_volume (control);
+ 
+         volume_step = g_settings_get_int (manager->priv->settings, "volume-step");
+         if (volume_step <= 0 || volume_step > 100) {
+@@ -1424,6 +1431,7 @@ start_media_keys_idle_cb (MsdMediaKeysManager *manager)
+ 
+         manager->priv->volume_monitor = g_volume_monitor_get ();
+         manager->priv->settings = g_settings_new (BINDING_SCHEMA);
++        manager->priv->sound_settings = g_settings_new (SOUND_SCHEMA);
+ 
+         ensure_cancellable (&manager->priv->rfkill_cancellable);
+ 
+@@ -1537,6 +1545,11 @@ msd_media_keys_manager_stop (MsdMediaKeysManager *manager)
+                 priv->settings = NULL;
+         }
+ 
++        if (priv->sound_settings != NULL) {
++                g_object_unref (priv->sound_settings);
++                priv->sound_settings = NULL;
++        }
++
+         if (priv->volume_monitor != NULL) {
+                 g_object_unref (priv->volume_monitor);
+                 priv->volume_monitor = NULL;
+-- 
+2.37.1
