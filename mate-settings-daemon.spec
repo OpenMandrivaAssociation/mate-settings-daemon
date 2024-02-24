@@ -1,8 +1,5 @@
 %define mate_ver	%(echo %{version}|cut -d. -f1,2)
 
-# Workadound for Clang 16
-#global optflags %{optflags} -Wno-incompatible-function-pointer-types
-
 # Workadound for plugins
 %define _disable_ld_no_undefined 1
 
@@ -54,7 +51,8 @@ This package provides MATE settings daemon, a daemon to manage the
 configuration of the MATE session in the background.
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING NEWS
+%license COPYING
+%doc AUTHORS NEWS
 %dir %{_sysconfdir}/mate-settings-daemon
 %dir %{_sysconfdir}/mate-settings-daemon/xrandr
 %dir %{_sysconfdir}/xrdb
@@ -115,7 +113,6 @@ This package contains includes files for the MATE settings daemon.
 %autosetup -p1
 
 %build
-#export LDFLAGS="%{ldflags} `pkg-config --libs gl pango cairo pangocairo cairo-ps`"
 #NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--disable-schemas-compile \
