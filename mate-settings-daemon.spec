@@ -128,6 +128,7 @@ This package contains includes files for the MATE settings daemon.
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
+autoreconf -fi
 %configure \
 	--disable-schemas-compile \
 	--enable-polkit \
