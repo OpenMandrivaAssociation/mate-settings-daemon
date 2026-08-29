@@ -115,6 +115,8 @@ This package contains includes files for the MATE settings daemon.
 
 %prep
 %autosetup -p1
+# after switching to slibtool - cc: error: unknown argument: '-export_dynamic'
+sed -i 's/-export_dynamic/-export-dynamic/g' configure.ac configure
 
 %build
 #NOCONFIGURE=yes ./autogen.sh
