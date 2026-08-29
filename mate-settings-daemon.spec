@@ -11,6 +11,14 @@ License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://mate-desktop.org
 Source0:	https://pub.mate-desktop.org/releases/%{mate_ver}/%{name}-%{version}.tar.xz
+
+# upstream commits
+Patch1:        mate-settings-daemon_0001-build-escape-newline.patch
+Patch2:        mate-settings-daemon_0002-plugins-add-missing-x11-linker-flags.patch
+Patch3:        mate-settings-daemon_0003-configure.ac-don-t-link-plugins-with-no-undefined.patch
+Patch4:        mate-settings-daemon_0004-Add-a-keyboard-shortcut-to-start-a-screen-reader-416.patch
+Patch5:        mate-settings-daemon_0005-Remove-remaining-unused-references-to-dbus-glib.patch
+
 BuildRequires:	automake
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
@@ -116,10 +124,10 @@ This package contains includes files for the MATE settings daemon.
 %prep
 %autosetup -p1
 # after switching to slibtool - cc: error: unknown argument: '-export_dynamic'
-sed -i 's/-export_dynamic/-export-dynamic/g' configure.ac configure
+#sed -i 's/-export_dynamic/-export-dynamic/g' configure.ac configure
 
 %build
-#NOCONFIGURE=yes ./autogen.sh
+%NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--disable-schemas-compile \
 	--enable-polkit \
