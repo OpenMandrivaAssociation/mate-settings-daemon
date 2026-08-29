@@ -127,7 +127,7 @@ This package contains includes files for the MATE settings daemon.
 #sed -i 's/-export_dynamic/-export-dynamic/g' configure.ac configure
 
 %build
-%NOCONFIGURE=yes ./autogen.sh
+#NOCONFIGURE=yes ./autogen.sh
 %configure \
 	--disable-schemas-compile \
 	--enable-polkit \
